@@ -1,0 +1,43 @@
+.loginpage__titlename {
+    font-size: 25px;
+    font-weight: 100;
+}
+
+.loginpage__container-title {
+    border-radius: 15px;
+}
+
+.loginpage__container {
+    width: 500px;
+    box-shadow: 7px 7px 14px #828282, -7px -7px 14px #fff;
+    padding: 30px;
+    margin-left: 30%;
+}
+
+.loginpage__titlename::before,
+.loginpage__titlename::after {
+    content: '';
+    display: inline-block;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 7rem;
+    height: 0.5px;
+    position: relative;
+    bottom: 7px;
+    margin: 0 10px;
+}
+
+.loginpage__title {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginpage__title img {
+    height: 70px;
+    width: 70px;
+}
+
+.btn-login {
+    border-radius: 10px;
+}
