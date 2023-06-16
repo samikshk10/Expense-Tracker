@@ -56,6 +56,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     soft_delete: {
       type: DataTypes.BOOLEAN
+    },
+    budget: {
+      type: DataTypes.FLOAT
     }
 
   }, {

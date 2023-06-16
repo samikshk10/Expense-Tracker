@@ -1,5 +1,9 @@
-function Button() {
-  return <button className="btn btn-primary">Hello</button>;
+function Buttons({ className, handleClick, buttonlabel }) {
+  return (
+    <button className={`btn ${className}`} onClick={handleClick}>
+      {buttonlabel || "button"}
+    </button>
+  );
 }
 
-export default Button;
+export default Buttons;

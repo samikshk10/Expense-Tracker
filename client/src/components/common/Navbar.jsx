@@ -5,7 +5,7 @@ import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 export default function Navbar() {
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg navbar-light navbar__all fixed-top ">
         <div className="container-fluid">
           <a className="navbar-brand" href="#">
             Expense Tracker
@@ -24,19 +24,20 @@ export default function Navbar() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">
-                  Expense
-                </a>
-              </li>
-              <li className="nav-item">
                 <a className="nav-link" href="#"></a>
               </li>
             </ul>
-            <form className="d-flex">
-              <button className="btn btn-outline-success" type="submit">
-                Logout
-              </button>
-            </form>
+            <div className="d-flex name-navbar">
+              <p>
+                Welcome{" "}
+                <span>
+                  {window.localStorage.getItem("username") || "User"} !!!
+                </span>
+              </p>
+              <a href="/logout">
+                <button className="btn btn-outline-success">Logout</button>
+              </a>
+            </div>
           </div>
         </div>
       </nav>

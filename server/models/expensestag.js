@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       ExpensesTag.hasMany(models.Expense, {
         as: "ExpensewithExpenseTagRelation",
-        foreignKey: "expenses_id"
+        foreignKey: "id"
       });
       ExpensesTag.hasMany(models.Tag, {
         as: "TagExpensewithTagRelation",
