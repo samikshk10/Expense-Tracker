@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoginIcon from "../assets/images/icon.png";
 import baseurl from "../../config";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Inputfield from "./common/inputfield";
 export default function LoginUI() {
+  const { state } = useLocation();
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [flashMessage, setFlashMessage] = useState("");
@@ -13,6 +14,13 @@ export default function LoginUI() {
     emailerror: "",
     passworderror: "",
   });
+
+  useEffect(() => {
+    if (state?.message) {
+      setFlashMessage(state?.message);
+      setFlashType("success");
+    }
+  }, []);
 
   const Navigate = useNavigate();
 
@@ -100,7 +108,7 @@ export default function LoginUI() {
             id={"password"}
             error={error.passworderror}
             handleChange={(e) => {
-              setEmail(e.target.value);
+              setPassword(e.target.value);
               seterror((prevState) => {
                 return { ...prevState, passworderror: "" };
               });
