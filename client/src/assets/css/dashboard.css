@@ -1,0 +1,13 @@
+.dashboard .table-history {
+    text-align: center;
+}
+
+
+.dashboard .table-heading {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.dashboard .table-scrollable {
+    overflow-x: hidden;
+}

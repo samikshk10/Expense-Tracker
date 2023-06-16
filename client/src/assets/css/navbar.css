@@ -1,0 +1,23 @@
+.navbar__all {
+    z-index: 999;
+    background-color: #fdfbfb;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+
+.name-navbar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-transform: capitalize;
+    font-size: 18px;
+
+}
+
+.name-navbar p {
+    background-color: dodgerblue;
+    color: #fff;
+    padding: 5px 8px;
+    border-radius: 10px;
+    position: relative;
+    top: 8px;
+}

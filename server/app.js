@@ -6,6 +6,9 @@ const helmet = require("helmet");
 const session = require("express-session");
 
 const authRouter = require("./routes/auth.routes");
+const handlemiddlewareRouter = require("./routes/handlemiddleware.routes");
+const expenseRouter = require('./routes/expense.routes');
+const incomeRouter = require('./routes/income.routes');
 
 const app = express();
 require('dotenv').config();
@@ -36,7 +39,9 @@ app.use(flash());
 app.use(cors());
 
 app.use("/", authRouter);
-
+app.use("/handlemiddleware", handlemiddlewareRouter);
+app.use('/', expenseRouter);
+app.use('/', incomeRouter);
 app.listen(PORT || 8000, () => {
     console.log("server is  running at port" + PORT || 8000)
 })

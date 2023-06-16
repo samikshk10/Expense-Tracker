@@ -1,17 +1,62 @@
 import { useState } from "react";
 import SignupIcon from "../assets/images/icon.png";
 import baseurl from "../../config";
+import Inputfield from "./common/inputfield";
 
 export default function SignupUI() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
+  const [cpassword, setcpassword] = useState("");
   const [email, setEmail] = useState("");
   const [flashMessage, setFlashMessage] = useState("");
   const [flashType, setFlashType] = useState("");
+  const [pwerror, setpwerror] = useState();
+  const [error, seterror] = useState({
+    fnameerror: "",
+    lnameerror: "",
+    emailerror: "",
+    passworderror: "",
+    cpassworderror: "",
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (firstName.trim() === "") {
+      seterror((prevState) => {
+        return { ...prevState, fnameerror: "FirstName is required" };
+      });
+    }
+    if (lastName.trim() === "") {
+      seterror((prevState) => {
+        return { ...prevState, lnameerror: "LastName is required" };
+      });
+    }
+    if (email.trim() === "") {
+      seterror((prevState) => {
+        return { ...prevState, emailerror: "Email is required" };
+      });
+    }
+    if (password.trim() === "") {
+      seterror((prevState) => {
+        return { ...prevState, passworderror: "Password is required" };
+      });
+    }
+    if (cpassword.trim() === "") {
+      seterror((prevState) => {
+        return { ...prevState, cpassworderror: "ConfirmPassword is required" };
+      });
+    } else {
+      if (password && password != cpassword) {
+        seterror((prevState) => {
+          return {
+            ...prevState,
+            cpassworderror: "Password Confirmation Doesnt Match",
+          };
+        });
+      }
+    }
+
     try {
       const response = await fetch(`${baseurl}/signup`, {
         method: "POST",
@@ -63,53 +108,86 @@ export default function SignupUI() {
       <form>
         <div className="row">
           <div className="mb-3 col-md-6">
-            <label className="form-label">FirstName</label>
-            <input
-              type="email"
-              name="firstName"
-              className="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              onChange={(e) => setFirstName(e.target.value)}
+            <Inputfield
+              label={"First Name"}
+              type={"text"}
+              name={"fname"}
+              className={"form-control"}
+              id={"fname"}
+              error={error.fnameerror}
+              handleChange={(e) => {
+                setFirstName(e.target.value);
+                seterror((prevState) => {
+                  return { ...prevState, fnameerror: "" };
+                });
+              }}
             />
-            <div className="invalid-feedback"></div>
           </div>
           <div className="mb-3 col-md-6">
-            <label className="form-label">LastName</label>
-            <input
-              type="email"
-              name="lastName"
-              className="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              onChange={(e) => setLastName(e.target.value)}
+            <Inputfield
+              label={"Last Name"}
+              type={"text"}
+              name={"lname"}
+              className={"form-control"}
+              id={"lname"}
+              error={error.lnameerror}
+              handleChange={(e) => {
+                setLastName(e.target.value);
+                seterror((prevState) => {
+                  return { ...prevState, lnameerror: "" };
+                });
+              }}
             />
-            <div className="invalid-feedback"></div>
           </div>
         </div>
         <div className="mb-3 ">
-          <label className="form-label">Email Address</label>
-          <input
-            type="email"
-            name="email"
-            className="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-            onChange={(e) => setEmail(e.target.value)}
+          <Inputfield
+            label={"Email Address"}
+            type={"email"}
+            name={"email"}
+            className={"form-control"}
+            id={"email"}
+            error={error.emailerror}
+            handleChange={(e) => {
+              setEmail(e.target.value);
+              seterror((prevState) => {
+                return { ...prevState, emailerror: "" };
+              });
+            }}
           />
-          <div className="invalid-feedback"></div>
         </div>
 
         <div className="mb-3">
-          <label className="form-label">Password</label>
-          <input
-            type="password"
-            name="password"
-            className="form-control "
-            id="exampleInputPassword1"
-            onChange={(e) => setPassword(e.target.value)}
+          <Inputfield
+            label={"Password"}
+            type={"password"}
+            name={"password"}
+            className={"form-control"}
+            id={"password"}
+            error={error.passworderror}
+            handleChange={(e) => {
+              setPassword(e.target.value);
+              seterror((prevState) => {
+                return { ...prevState, passworderror: "" };
+              });
+            }}
           />
-          <div className="invalid-feedback"></div>
+        </div>
+        <div className="mb-3">
+          <Inputfield
+            label={"Confirm Password"}
+            type={"password"}
+            name={"cpassword"}
+            className={"form-control"}
+            id={"cpassword"}
+            error={error.cpassworderror}
+            handleChange={(e) => {
+              setcpassword(e.target.value);
+              seterror((prevState) => {
+                return { ...prevState, cpassworderror: "" };
+              });
+            }}
+          />
         </div>
 
         <button

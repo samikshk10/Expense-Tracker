@@ -2,40 +2,56 @@ const bcrypt = require("bcrypt");
 const {
     User
 } = require("../models");
-
+const jwt = require('jsonwebtoken')
+const generateToken = (id, email) => {
+    return jwt.sign({
+        userId: id,
+        userEmail: email
+    }, process.env.TOKEN_SECRET, {
+        expiresIn: '1800s'
+    })
+}
 
 async function handlelogin(req, res) {
     try {
+        if (req.body.email && req.body.password) {
 
-        if (req.body.password.length < 8) {
-            return res.json({
-                type: "danger",
-                msg: "Password must be at least 8 characters"
-            })
-        }
-        const user = await User.findOne({
-            where: {
-                email: req.body.email,
+            if (req.body.password.length < 8) {
+                return res.json({
+                    type: "danger",
+                    msg: "Password must be at least 8 characters"
+                })
             }
-        });
-        if (!user) {
-            return res.json({
-                type: "danger",
-                msg: "User not found"
-            })
-        }
-
-        const isValidPassword = await bcrypt.compare(req.body.password, user.password);
-        if (!isValidPassword) {
-            return res.json({
-                type: "danger",
-                msg: "Incorrect Email or Password"
-            })
-        } else {
-            req.session.isLoggedIn = true;
-            return res.json({
-                isLoggedIn: req.session.isLoggedIn
+            const user = await User.findOne({
+                where: {
+                    email: req.body.email,
+                }
             });
+            if (!user) {
+                return res.json({
+                    type: "danger",
+                    msg: "User not found"
+                })
+            }
+
+            const isValidPassword = await bcrypt.compare(req.body.password, user.password);
+            if (!isValidPassword) {
+                return res.json({
+                    type: "danger",
+                    msg: "Incorrect Email or Password"
+                })
+            } else {
+                req.session.userId = user.id;
+                req.session.isLoggedIn = true;
+                console.log("user id >>>" + user.id);
+                const token = generateToken(user.id, user.email);
+                return res.json({
+                    isLoggedIn: req.session.isLoggedIn,
+                    token: token,
+                    userid: user.id,
+                    userName: user.firstName
+                });
+            }
         }
 
 

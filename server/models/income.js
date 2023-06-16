@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Expense extends Model {
+  class Income extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,56 +11,35 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Expense.belongsTo(models.User, {
-        as: "UserExpensesRelation",
-        foreignKey: "user_id"
-      });
-
-      Expense.hasMany(models.Category, {
-        as: "CategoryExpenseRelation",
-        foreignKey: "category_id"
-
-      })
     }
   }
-  Expense.init({
-    title: {
+  Income.init({
+    income_title: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    note: {
+    income_note: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    expensesDate: {
+    income_date: {
       type: DataTypes.DATE,
+      allowNull: false
+    },
+    income_category: {
+      type: DataTypes.STRING,
       allowNull: false
     },
     user_id: {
       type: DataTypes.INTEGER,
-      references: {
-        model: 'Users',
-        key: 'id'
-      }
     },
-    soft_delete: {
-      type: DataTypes.BOOLEAN,
-    },
-    archived: {
-      type: DataTypes.BOOLEAN
-    },
-    category_name: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    amount: {
+    income_amount: {
       type: DataTypes.FLOAT,
       allowNull: false
-    }
-
+    },
   }, {
     sequelize,
-    modelName: 'Expense',
+    modelName: 'Income',
   });
-  return Expense;
+  return Income;
 };
