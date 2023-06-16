@@ -7,7 +7,11 @@ export default function Logout() {
     window.localStorage.removeItem("jwttoken");
     window.localStorage.removeItem("userid");
     window.localStorage.removeItem("username");
-    navigate("/login");
+    navigate("/login", {
+      state: {
+        message: "Logout Successfully",
+      },
+    });
   }, []);
   return <div></div>;
 }
