@@ -10,6 +10,8 @@ const handlemiddlewareRouter = require("./routes/handlemiddleware.routes");
 const expenseRouter = require('./routes/expense.routes');
 const incomeRouter = require('./routes/income.routes');
 
+
+const sequelize = require('./sequelizesetup');
 const app = express();
 require('dotenv').config();
 
@@ -38,10 +40,20 @@ app.use(
 app.use(flash());
 app.use(cors());
 
-app.use("/", authRouter);
+app.use("/api", authRouter);
 app.use("/handlemiddleware", handlemiddlewareRouter);
-app.use('/', expenseRouter);
-app.use('/', incomeRouter);
-app.listen(PORT || 8000, () => {
-    console.log("server is  running at port" + PORT || 8000)
-})
+app.use('/api', expenseRouter);
+app.use('/api', incomeRouter);
+const initApp = async () => {
+    console.log("Testing the database connection..");
+    try {
+      await sequelize.authenticate();
+      console.log("Connection has been established successfully.");
+      app.listen(PORT, () => {
+        console.log(`Server is up and running at: http://localhost:${PORT}`);
+      });
+    } catch (error) {
+      console.error("Unable to connect to the database:", error);
+    }
+  };
+  initApp();
