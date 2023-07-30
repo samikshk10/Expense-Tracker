@@ -44,6 +44,9 @@ app.use("/api", authRouter);
 app.use("/handlemiddleware", handlemiddlewareRouter);
 app.use('/api', expenseRouter);
 app.use('/api', incomeRouter);
+app.get('/home',(req,res)=>{
+    res.send("this app is working");
+});
 const initApp = async () => {
     console.log("Testing the database connection..");
     try {
