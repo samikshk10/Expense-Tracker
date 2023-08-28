@@ -38,7 +38,7 @@ app.use(
     })
 );
 app.use(flash());
-app.use(cors());
+app.use(cors({origin:"https://expensestracker.samikshk.com"}));
 
 app.use("/api", authRouter);
 app.use("/handlemiddleware", handlemiddlewareRouter);
